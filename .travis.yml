@@ -15,4 +15,4 @@ before_script:
    - "gem install travis-artifacts"
 
 after_success:
-   - "travis-artifacts upload --path build/jars"
+   - "travis-artifacts upload --path build/jars --target-path ./"
