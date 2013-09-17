@@ -4,4 +4,15 @@ jdk:
   - oraclejdk6
 
 env:
-  - BRANCH_ID=$TRAVIS_BRANCH VERSION=$TRAVIS_BUILD_NUMBER
+  global:
+    - BRANCH_ID=$TRAVIS_BRANCH VERSION=$TRAVIS_BUILD_NUMBER
+    - ARTIFACTS_AWS_REGION=eu-west-1
+    - ARTIFACTS_S3_BUCKET=public-builds
+    - secure: "V/PupzCX7FAZdSCIPt+rwtB9BcJxUzGkF1Sl+gDuUnUFz5SCaUkzkj0/+1ttaiXFXEimsqamhTUW7ViAD6Isei2KAfIF6anayzqTcSo0WVhLyk617fet8Bm1DEwF3Z+tGNj9MSQ5AML/iwk875NsvJk2JA6Fl03+XQOGC0Tvdx4="
+    - secure: "EbH4YlxAl4XDIgs2pKVMdZ6mE1eGZgf1A0xt2ecLO4EEnmY0fA003m975JdK5/wKYBfoOpve3LUj+gVmebWFJC7wsSG24U0bdzya2WvEXe7OCPUt15fM5UYPblrqLlMrdSNpSDVgvFvBnQLqqx3O8tLVY2mBr3uhwJmFwtWYXlE="
+
+before_script:
+   - "gem install travis-artifacts"
+
+after_success:
+   - "travis-artifacts upload --path build/jars"

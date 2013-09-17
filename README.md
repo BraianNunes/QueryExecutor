@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/chernser/QueryExecutor.png?branch=develop)](https://travis-ci.org/chernser/QueryExecutor)
+
 QueryExecutor
 =============
 
