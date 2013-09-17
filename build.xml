@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="queryexecutor" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="lib/deploy.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javaws.jar"/>
+      <include name="lib/jce.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/management-agent.jar"/>
+      <include name="lib/plugin.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="../Classes/charsets.jar"/>
+      <include name="../Classes/classes.jar"/>
+      <include name="../Classes/jsse.jar"/>
+      <include name="../Classes/ui.jar"/>
+      <include name="lib/ext/apple_provider.jar"/>
+      <include name="lib/ext/dnsns.jar"/>
+      <include name="lib/ext/localedata.jar"/>
+      <include name="lib/ext/sunjce_provider.jar"/>
+      <include name="lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module QueryExecutor -->
+  
+  <dirname property="module.queryexecutor.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.queryexecutor" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.queryexecutor" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.queryexecutor" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.queryexecutor" value="${compiler.args}"/>
+  
+  <property name="queryexecutor.output.dir" value="${module.queryexecutor.basedir}/out/production/QueryExecutor"/>
+  <property name="queryexecutor.testoutput.dir" value="${module.queryexecutor.basedir}/out/test/QueryExecutor"/>
+  
+  <path id="queryexecutor.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="queryexecutor.module.production.classpath">
+    <path refid="${module.jdk.classpath.queryexecutor}"/>
+  </path>
+  
+  <path id="queryexecutor.runtime.production.module.classpath">
+    <pathelement location="${queryexecutor.output.dir}"/>
+  </path>
+  
+  <path id="queryexecutor.module.classpath">
+    <path refid="${module.jdk.classpath.queryexecutor}"/>
+    <pathelement location="${queryexecutor.output.dir}"/>
+  </path>
+  
+  <path id="queryexecutor.runtime.module.classpath">
+    <pathelement location="${queryexecutor.testoutput.dir}"/>
+    <pathelement location="${queryexecutor.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.queryexecutor">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.queryexecutor">
+    <patternset refid="excluded.from.module.queryexecutor"/>
+  </patternset>
+  
+  <path id="queryexecutor.module.sourcepath">
+    <dirset dir="${module.queryexecutor.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.queryexecutor" depends="compile.module.queryexecutor.production,compile.module.queryexecutor.tests" description="Compile module QueryExecutor"/>
+  
+  <target name="compile.module.queryexecutor.production" description="Compile module QueryExecutor; production classes">
+    <mkdir dir="${queryexecutor.output.dir}"/>
+    <javac destdir="${queryexecutor.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.queryexecutor}/javac">
+      <compilerarg line="${compiler.args.queryexecutor}"/>
+      <bootclasspath refid="queryexecutor.module.bootclasspath"/>
+      <classpath refid="queryexecutor.module.production.classpath"/>
+      <src refid="queryexecutor.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.queryexecutor"/>
+    </javac>
+    
+    <copy todir="${queryexecutor.output.dir}">
+      <fileset dir="${module.queryexecutor.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.queryexecutor.tests" depends="compile.module.queryexecutor.production" description="compile module QueryExecutor; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.queryexecutor" description="cleanup module">
+    <delete dir="${queryexecutor.output.dir}"/>
+    <delete dir="${queryexecutor.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.queryexecutor" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.queryexecutor" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
