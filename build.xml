@@ -143,9 +143,9 @@
   </path>
   
   
-  <target name="compile.module.queryexecutor" depends="compile.module.queryexecutor.production,compile.module.queryexecutor.tests" description="Compile module QueryExecutor"/>
+  <target name="compile.module.queryexecutor" depends="production,test" description="Compile module QueryExecutor"/>
   
-  <target name="compile.module.queryexecutor.production" description="Compile module QueryExecutor; production classes">
+  <target name="production" description="Compile module QueryExecutor; production classes">
     <mkdir dir="${queryexecutor.output.dir}"/>
     <javac destdir="${queryexecutor.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.queryexecutor}/javac">
       <compilerarg line="${compiler.args.queryexecutor}"/>
@@ -163,7 +163,7 @@
     </copy>
   </target>
   
-  <target name="compile.module.queryexecutor.tests" depends="compile.module.queryexecutor.production" description="compile module QueryExecutor; test classes" unless="skip.tests"/>
+  <target name="test" depends="production" description="compile module QueryExecutor; test classes" unless="skip.tests"/>
   
   <target name="clean.module.queryexecutor" description="cleanup module">
     <delete dir="${queryexecutor.output.dir}"/>
