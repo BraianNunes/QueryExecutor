@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="queryexecutor" default="all">
 
+
+    <property environment="env"/>
+    <property name="branch" value="${env.BRANCH_ID}"/>
+    <property name="version" value="${env.VERSION}"/>
+    <property name="jdk" value="jdk${java.version}"/>
+
+    <echo message="Building: ${branch}-${version}-${jdk}"/>
+
     <target name="init">
         <mkdir dir="build/classes"/>
         <mkdir dir="build/jars"/>
@@ -13,7 +21,7 @@
     </target>
 
     <target name="jars" depends="build">
-        <jar basedir="build/classes" destfile="build/jars/query_executor.jar"></jar>
+        <jar basedir="build/classes" destfile="build/jars/query_executor_${branch}_${version}_${jdk}.jar"></jar>
     </target>
 
     <target name="test" depends="build">
