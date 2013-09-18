@@ -52,3 +52,25 @@ You need to implement queryexecutor.inf.DataSource interface to provide connecti
     }
 
 ```
+
+In case you need to maintain multiply executors connected to different databases you may use
+QueryExecutorFactory:
+
+```java
+
+
+public class OneServiceDataSource extends AbstractDataSource {
+
+    private static final OneServiceDataSource instance = new OneServiceDataSource();
+
+    @Override
+    protected String getConnectionUrl() {
+        return super.getConnectionUrl();
+    }
+
+    public static QueryExecutor getQueryExecutor() {
+        return QueryExecutorFactory.getQueryExecutorAndStart(instance);
+    }
+}
+
+```
