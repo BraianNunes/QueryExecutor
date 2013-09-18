@@ -20,11 +20,10 @@
   <body>
       <div id="header">
         <nav>
-          <li class="fork"><a href="https://github.com/chernser/QueryExecutor">On GitHub</a></li>
-          <li class="downloads"><a href="https://s3-eu-west-1.amazonaws.com/public-builds/QueryExecutor/query_executor_master_35_oraclejdk6.jar">jdk1.6</a></li>
-          <li class="downloads"><a href="https://s3-eu-west-1.amazonaws.com/public-builds/QueryExecutor/query_executor_master_35_oraclejdk7.jar">jdk1.7</a></li>
+          <li class="fork"><a href="https://github.com/chernser/QueryExecutor">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/chernser/QueryExecutor/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/chernser/QueryExecutor/tarball/master">TAR</a></li>
           <li class="title">DOWNLOADS</li>
-
         </nav>
       </div><!-- end header -->
 
@@ -88,6 +87,27 @@ is bound to custom data source.</p>
     <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
         <span class="n">QueryExecutor</span><span class="o">.</span><span class="na">closeResultSet</span><span class="o">(</span><span class="n">rs</span><span class="o">);</span>
     <span class="o">}</span>
+
+</pre></div>
+
+<p>In case you need to maintain multiply executors connected to different databases you may use
+QueryExecutorFactory:</p>
+
+<div class="highlight highlight-java"><pre>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OneServiceDataSource</span> <span class="kd">extends</span> <span class="n">AbstractDataSource</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">OneServiceDataSource</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OneServiceDataSource</span><span class="o">();</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="n">String</span> <span class="nf">getConnectionUrl</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">getConnectionUrl</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">QueryExecutor</span> <span class="nf">getQueryExecutor</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">QueryExecutorFactory</span><span class="o">.</span><span class="na">getQueryExecutorAndStart</span><span class="o">(</span><span class="n">instance</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 </pre></div>
       </section>
